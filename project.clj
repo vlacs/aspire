@@ -15,6 +15,8 @@
                  [hickory "0.5.2" :exclusions [org.clojure/data.json]]
                  [honeysql "0.4.2"]
                  [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
+                 [com.cemerick/friend "0.2.0"]
+                 [digest "1.4.3"]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-cljsbuild "0.3.2"]
