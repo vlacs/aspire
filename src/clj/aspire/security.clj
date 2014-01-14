@@ -1,20 +1,15 @@
 (ns aspire.security
   (:require [digest :refer [md5]]
-            [aspire.data.user :refer [get-valid-user]]))
+            [aspire.data.user :refer [get-valid-user]]
+            [aspire.util :refer [keywords->ns]]))
 
-(def roles {::admin "ADMIN"
-            ::adult-ed "ADULTED"
-            ::deprecated "DEPRECATED"
-            ::duplicate-student "DUPLICATESTUDENT"
-            ::email-only "EMAILONLY"
-            ::former-admin "FORMERADMIN"
-            ::former-teacher "FORMERTEACHER"
-            ::guardian "GUARDIAN"
-            ::inactive "INACTIVE"
-            ::office-general "OFFICEGENERAL"
-            ::partner-school "PartnerSchool"
-            ::student "STUDENT"
-            ::teacher "TEACHER"})
+(def active-roles
+  (set (keywords->ns 'aspire.data.user
+                     :admin
+                     :adult-ed
+                     :guardian
+                     :student
+                     :teacher)))
 
 (defn md5-credential-fn
   "This credential fn checks the database for the

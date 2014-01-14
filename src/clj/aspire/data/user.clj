@@ -4,7 +4,21 @@
   (:require [aspire.sqldb :refer [select! update!]]
             [honeysql.core :refer [param]]))
 
-(def sis-user-table "mdl_sis_user")
+(def roles {::admin "ADMIN"
+            ::adult-ed "ADULTED"
+            ::deprecated "DEPRECATED"
+            ::duplicate-student "DUPLICATESTUDENT"
+            ::email-only "EMAILONLY"
+            ::former-admin "FORMERADMIN"
+            ::former-teacher "FORMERTEACHER"
+            ::guardian "GUARDIAN"
+            ::inactive "INACTIVE"
+            ::office-general "OFFICEGENERAL"
+            ::partner-school "PartnerSchool"
+            ::student "STUDENT"
+            ::teacher "TEACHER"})
+
+(def sis-user-table (keyword "mdl_sis_user"))
 (def sis-user-fields [:id
                       :sis_user_idstr
                       :sis_user_id
@@ -23,7 +37,7 @@
 
 (def select-user-sql
   {:select sis-user-fields
-   :from sis-user-table})
+   :from [sis-user-table]})
 
 (def valid-user-sql
   (assoc select-user-sql :where [:and
@@ -36,7 +50,7 @@
 (defn get-valid-user
   "Get user when username and password match."
   [username password]
-  (if-let [result (select! valid-user-sql :username username
-                           :password password)]
-    result
-    nil))
+  (let [result (select! valid-user-sql :username username :password password)]
+    (if (not (empty? result))
+      (first result)
+      nil)))
