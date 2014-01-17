@@ -18,7 +18,7 @@
             ::student "STUDENT"
             ::teacher "TEACHER"})
 
-(def sis-user-table (keyword "mdl_sis_user"))
+(def sis-user-table :mdl_sis_user)
 (def sis-user-fields [:id
                       :sis_user_idstr
                       :sis_user_id

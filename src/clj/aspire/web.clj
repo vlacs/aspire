@@ -8,7 +8,8 @@
             [liberator.dev :refer [wrap-trace]]
             [compojure.core :refer [defroutes ANY]]
             [hiccup.page]
-            [aspire.sqldb :as a-sqldb])
+            [aspire.sqldb :as a-sqldb]
+            [aspire.security :refer [logout-route]])
   (:gen-class))
 
 (defresource resource-app
@@ -38,7 +39,7 @@
   :handle-ok (fn [_]
                (a-sqldb/select! {:select [:*] :from [:comp]})))
 
-(defroutes app-routes
+ (defroutes app-routes
   (ANY "/" [] resource-app)
   (ANY "/api" [] resource-api)
   (ANY "/comps" [] resource-comps))

@@ -22,11 +22,11 @@
 
 (defn start-http!
   [system]
+  (prn system)
   (a-web/run! (get-in system [:conf :conf-web])))
 
 (defn stop-http!
   [system]
-  (prn (:jetty-instance system))
   (.stop (:jetty-instance system))
   (dissoc system :jetty-instance))
 
@@ -86,15 +86,4 @@
      (:init-sql opts) (a-sqldb-ddl/init! db) 
      (:zero-out-sql-db opts) (a-sqldb-ddl/print-drop-sql!) 
      :else (start! system))))
-
-(comment
-
-  (def home (System/getProperty "user.home"))
-  (def mydir (format "%s/.aspire/" home))
-  (def args ["--verbose"
-             "--conf-sql-db" (format "%s/conf-sql-db.edn" mydir)
-             "--conf-web" (format "%s/conf-web.edn" mydir)])
-  (def system (apply -main args))
-
-  )
 
