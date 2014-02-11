@@ -18,5 +18,8 @@
  
 ;; Disabling this temporarily; see my comments in web_test_config. --moquist
 #_(deftest resource-app-test
-  (is (= (:status onboarding-response) 200)))
+    (is (= (:status onboarding-response) 200)))
+
+(deftest auth-required-test
+  (is (= (:status auth-required-response) 401)))
 
