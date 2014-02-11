@@ -1,5 +1,6 @@
 (ns aspire.web-test-config
   (:require [aspire.web :as a-web]
+            [aspire.db-config :as a-db]
             [clojure.test :refer :all]
             [ring.mock.request :as rmr]))
 
@@ -16,12 +17,11 @@
   ;; After we switch to datomic, it will be super-easy to populate a
   ;; datomic:mem DB for testing.
   ;; --moquist
-  #_(def onboarding-response (a-web/onboarding (rmr/request :get "/"))))
+  #_(def onboarding-response (a-web/onboarding (rmr/request :get "/")))
+  (a-db/setup-test-db!))
   
 (defn teardown-test []
-  (comment
-    ;; this is where we would dismantle the test db
-    (println "tearing down test ...")))
+  (a-db/teardown-test-db!))
 
 (defn web-test-config
   [web-tests]
