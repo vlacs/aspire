@@ -1,5 +1,5 @@
 (ns aspire.db-config
-  ( :require [datomic.api :as d]))
+  ( :require  [datomic.api :as d]))
 
 (def uri "datomic:mem://aspire-test")
 (def test-db (d/create-database uri))
@@ -13,9 +13,10 @@
   (d/transact conn schema-tx)
   (d/transact conn data-tx))
 
-
-;; sample test query from datomic gettin started
-;;(def results (d/q '[:find ?c :where [?c :community/name]] (d/db conn)))
-;;(count results)
+(defn teardown-test-db!
+  []
+  ;; is calling release necessary / desirable?
+  (d/release conn)
+  (d/delete-database uri))
 
 
