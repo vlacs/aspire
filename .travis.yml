@@ -1,5 +1,7 @@
 language: clojure
 lein: lein2
-script: lein2 test
+before_script:./dev-set-up.sh
+script: lein2 test2junit
+after_script: ls -al target
 jdk:
   - openjdk7
