@@ -2,6 +2,6 @@ language: clojure
 lein: lein2
 before_script: ${TRAVIS_BUILD_DIR}/dev-set-up.sh
 script: lein2 test2junit
-after_script: ls -al target
+after_script: ls -al test2junit
 jdk:
   - openjdk7

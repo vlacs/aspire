@@ -12,6 +12,11 @@
 
 (def test-schema (edn/read-string (slurp "schema.edn")))
 
+(defn db-url [home-dir]
+         (if-let [nums (.indexOf home-dir "")]
+           "bar"
+          "//localhost:5432/aspire-test" ))
+
 (def test-db
   (let [conf (a-conf/load-configs (apply str home-dir "/" ".aspire" ))
         db (:conf-sql-db conf)]
